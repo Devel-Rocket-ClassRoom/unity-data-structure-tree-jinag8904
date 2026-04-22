@@ -6,7 +6,7 @@ using System.Linq;
 
 public class BinarySearchTree<TKey, TValue> : IDictionary<TKey, TValue> where TKey : IComparable<TKey>
 {
-    protected TreeNode<TKey, TValue> root;
+    public TreeNode<TKey, TValue> root;
 
     public BinarySearchTree()
     {
