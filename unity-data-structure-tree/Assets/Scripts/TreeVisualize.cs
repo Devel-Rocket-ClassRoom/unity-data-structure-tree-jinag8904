@@ -1,78 +1,101 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeVisualize: MonoBehaviour
+public class TreeVisualize : MonoBehaviour
 {
-    public enum Mode { Pow, LevelOrder, InOrder }
-    public Mode mode = Mode.Pow;
+    private readonly Dictionary<object, Vector3> nodePositions = new();
+    public float horizontalSpacing = 2.0f;
+    public float verticalSpacing = 2.0f;
 
-    BinarySearchTree<int, int> bst = new();
-    public KeyValuePair<int, int> root;
-
-    public GameObject nodePrefab;
-
-    private void Start()
-    {
-        root = new KeyValuePair<int, int>(Random.Range(0, 1000), Random.Range(0, 1000));
-        bst.Add(root);
-
-        UpdateTree();
-    }
-
-    private void OnValidate()
-    {
-        UpdateTree();
-    }
+    public enum VisualizeMode { Pow, LevelOrder, InOrder }
+    public VisualizeMode mode = VisualizeMode.Pow;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            var key = Random.Range(0, 1000);
-            var value = Random.Range(0, 1000);
-            bst.Add(key, value);
-                
-            UpdateTree();
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+
         }
     }
 
-    private void UpdateTree()   // 순회, 계산, 시각화
+    private void AssignPositionsPow<TKey, TValue>(TreeNode<TKey, TValue> node, Vector3 position, int height)
     {
-        switch (mode)
+        if (node == null) return;
+
+        nodePositions[node] = position;
+
+        float offset = horizontalSpacing * 0.5f * Mathf.Pow(2, height);
+
+        Vector3 childBase = position + Vector3.down * verticalSpacing;
+
+        AssignPositionsPow(node.Left, childBase + Vector3.left * offset, height -1);
+        AssignPositionsPow(node.Right, childBase + Vector3.right * offset, height -1);
+    }
+
+    private void AssignPositionsLevelOrder<TKey, TValue>(TreeNode<TKey, TValue> root)
+    {
+        var levels = new List<List<TreeNode<TKey, TValue>>>();
+        var queue = new Queue<(TreeNode<TKey, TValue> node, int depth)>();
+
+        queue.Enqueue((root, 0));
+
+        while (queue.Count > 0)
         {
-            case Mode.Pow:
-                Pow();
-                break;
-            case Mode.LevelOrder:
-                LevelOrder();
-                break;
-            case Mode.InOrder:
-                InOrder();
-                break;
+            var (node, depth) = queue.Dequeue();
+
+            // TODO: levels 리스트 크기가 depth보다 작으면 빈 List를 추가해 늘려준다
+            while (levels.Count <= depth) 
+            { 
+                levels.Add(new List<TreeNode<TKey, TValue>>());
+            }
+
+            levels[depth].Add(node);
+
+            // TODO: 좌/우 자식을 depth + 1로 큐에 넣기
+            if (node.Left != null)
+                queue.Enqueue((node.Left, depth + 1));
+
+            if (node.Right != null)
+                queue.Enqueue((node.Right, depth + 1));
+        }
+
+        for (int depth = 0; depth < levels.Count; depth++)
+        {
+            float y = -depth * verticalSpacing;
+            var row = levels[depth];
+
+            for (int i = 0; i < row.Count; i++)
+            {
+                // TODO: i번째 노드의 x좌표는?
+                nodePositions[row[i]] = new Vector3(i * horizontalSpacing, y, 0f);
+            }
         }
     }
 
-    private void Pow()  // 레벨이 내려갈수록 간격이 절반으로 줄어든다.
+    private void AssignPositionsInOrder<TKey, TValue>(TreeNode<TKey, TValue> node, int depth, ref int xIndex)
     {
-        foreach (var pair in bst.LevelOrderTraversal())
-        {
+        if (node == null) return;
 
-            Vector3 pos = Vector3.zero;
-            Instantiate(nodePrefab, pos, Quaternion.identity);
-        }
-    }
+        // TODO: 왼쪽 서브트리 먼저 방문 (depth + 1)
+        
+        ;
 
-    private void LevelOrder()   // 좌측부터 균등 배치함
-    {
-        foreach (var pair in bst.LevelOrderTraversal())
-        {
-        }
-    }
+        // TODO: 자신의 좌표 기록 — x는 xIndex 기반, y는 depth 기반
+        nodePositions[node] = new Vector3(/* ??? */, /* ??? */, 0f);
+        xIndex++;
 
-    private void InOrder()  // x 인덱스를 증가시켜 배치. (x 좌표 순서 = 키 오름차순)
-    {
-        foreach (var pair in bst.InOrderTraversal())
-        {
-        }
+        // TODO: 오른쪽 서브트리 방문 (depth + 1)
+        /* ??? */
+        ;
     }
 }

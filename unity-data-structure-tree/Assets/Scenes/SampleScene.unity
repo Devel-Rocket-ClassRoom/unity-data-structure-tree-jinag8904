@@ -520,7 +520,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2056110277}
-  - component: {fileID: 2056110278}
   m_Layer: 0
   m_Name: TreeVisualize
   m_TagString: Untagged
@@ -543,20 +542,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2056110278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2056110276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbec7a2af8448944386b7018db1298a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TreeVisualize
-  mode: 0
-  nodePrefab: {fileID: 3510836805227640470, guid: 7a936d1313be7f747b05255e41b942a7, type: 3}
 --- !u!1 &2125553251
 GameObject:
   m_ObjectHideFlags: 0
