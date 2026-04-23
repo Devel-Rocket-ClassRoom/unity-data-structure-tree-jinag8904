@@ -5,11 +5,22 @@ public class PriorityQTest : MonoBehaviour
 {
     PriorityQueue<int, int> pq = new();
 
+    public enum Mode { Min, Max }
+    public Mode mode = Mode.Min;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            pq.Enqueue(Random.Range(0, 100), Random.Range(0, 100));
+            switch (mode)
+            {
+                case Mode.Min:
+                    pq.EnqueueMin(Random.Range(0, 100), Random.Range(0, 100));
+                    break;
+                case Mode.Max:
+                    pq.EnqueueMax(Random.Range(0, 100), Random.Range(0, 100));
+                    break;
+            }
 
             for (int i = 0;  i < pq.Count; i++)
             {
@@ -26,7 +37,15 @@ public class PriorityQTest : MonoBehaviour
                 return;
             }
 
-            Debug.Log($"Dequeue: {pq.Dequeue()}");
+            switch (mode)
+            {
+                case Mode.Min:
+                    Debug.Log($"Dequeue: {pq.DequeueMin()}");
+                    break;
+                case Mode.Max:
+                    Debug.Log($"Dequeue: {pq.DequeueMax()}");
+                    break;
+            }
 
             for (int i = 0; i < pq.Count; i++)
             {
