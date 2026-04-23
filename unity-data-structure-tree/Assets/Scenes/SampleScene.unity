@@ -537,7 +537,7 @@ Transform:
   m_GameObject: {fileID: 2056110276}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07596, y: -0, z: 0.31328}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   horizontalSpacing: 2
   verticalSpacing: 2
-  mode: 2
+  mode: 0
   nodePrefab: {fileID: 3510836805227640470, guid: 7a936d1313be7f747b05255e41b942a7, type: 3}
 --- !u!1 &2125553251
 GameObject:
