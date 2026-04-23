@@ -51,34 +51,32 @@ public class PriorityQueue<TElement, TPriority>
 
         var i = 0;
 
-        while (2 * i + 1 < Count -1)
+        while (2 * i + 1 < Count)   // 자식이 없을 때까지
         {
-            var compare = priorityQueue[i].CompareTo(priorityQueue[2 * i + 1]);
+            int compare;
+            int compareChildIndex;
 
-            if (compare > 0)
+            if (2 * i + 2 < Count)  // 오른쪽 자식이 있는 경우
             {
-                var temp = priorityQueue[i];
-                priorityQueue[i] = priorityQueue[2 * i + 1];
-                priorityQueue[2 * i + 1] = temp;
-                i = 2 * i + 1;
+                compare = priorityQueue[2 * i + 1].CompareTo(priorityQueue[2 * i + 2]);
+
+                if (compare < 0)    compareChildIndex = 2 * i + 1;
+                else                compareChildIndex = 2 * i + 2;
             }
 
             else
             {
-                break;
+                compareChildIndex = 2 * i + 1;
             }
-        }
 
-        while (2 * i + 2 < Count -1)
-        {
-            var compare = priorityQueue[i].CompareTo(priorityQueue[2 * i + 2]);
+            compare = priorityQueue[i].CompareTo(priorityQueue[compareChildIndex]);
 
             if (compare > 0)
             {
                 var temp = priorityQueue[i];
-                priorityQueue[i] = priorityQueue[2 * i + 2];
-                priorityQueue[2 * i + 2] = temp;
-                i = 2 * i + 2;
+                priorityQueue[i] = priorityQueue[compareChildIndex];
+                priorityQueue[compareChildIndex] = temp;
+                i = compareChildIndex;
             }
 
             else
