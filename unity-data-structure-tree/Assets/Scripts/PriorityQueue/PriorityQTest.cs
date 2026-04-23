@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 public class PriorityQTest : MonoBehaviour
 {
@@ -22,12 +23,7 @@ public class PriorityQTest : MonoBehaviour
                     break;
             }
 
-            for (int i = 0;  i < pq.Count; i++)
-            {
-                Debug.Log(pq[i].Element);
-            }
-
-            Debug.Log("ㅡㅡㅡㅡㅡ");
+            Print();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -47,12 +43,7 @@ public class PriorityQTest : MonoBehaviour
                     break;
             }
 
-            for (int i = 0; i < pq.Count; i++)
-            {
-                Debug.Log(pq[i].Element);
-            }
-
-            Debug.Log("ㅡㅡㅡㅡㅡ");
+            Print();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -60,5 +51,17 @@ public class PriorityQTest : MonoBehaviour
             pq.Clear();
             Debug.Log("클리어");
         }
+    }
+
+    private void Print()
+    {
+        StringBuilder sb = new();
+
+        for (int i = 0; i < pq.Count; i++)
+        {
+            sb.Append($"{pq[i].Element} ");
+        }
+
+        Debug.Log(sb.ToString());
     }
 }
